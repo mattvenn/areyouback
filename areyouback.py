@@ -1,12 +1,13 @@
 from twilio.rest import TwilioRestClient
 from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
-import cgi, logging, urllib, fcntl
+import cgi, logging, urllib, fcntl, os
 from send_sms import SendSMS
 from secrets import sid, token, number, to_num, to_name
 
 # globals
 ip = '77.73.6.229'
 port = 8090
+run_file = 'back'
 
 # setup logger
 log = logging.getLogger('')
@@ -52,6 +53,11 @@ if __name__ == '__main__':
         log.warning("another process is running with lock. quitting!")
         exit(1)
 
+    # don't run if already back
+    if os.path.exists(run_file):
+        log.info("already back")
+        exit(0)
+
     # get server ready to handle callback
     server = HTTPServer((ip,port), HttpHandler)
 
@@ -76,6 +82,8 @@ if __name__ == '__main__':
 
     # get status and send message if it got through
     if server.call_status == 'completed':
+        # touch a file so we don't run again
+        open(run_file, 'a').close()
         log.info("sending sms")
         sms = SendSMS()
         sms.send("%s is back!" % to_name)
