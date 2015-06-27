@@ -1,16 +1,12 @@
 from twilio.rest import TwilioRestClient
-from secrets import sid, token, number
-from BaseHTTPServer import HTTPServer
-from BaseHTTPServer import BaseHTTPRequestHandler
+from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 import cgi, logging, urllib, fcntl
 from send_sms import SendSMS
+from secrets import sid, token, number, to_num, to_name
 
 # globals
 ip = '77.73.6.229'
 port = 8090
-to_num = '+447804303861'
-#to_num = number # uncomment to test
-to_name = 'sam'
 
 # setup logger
 log = logging.getLogger('')

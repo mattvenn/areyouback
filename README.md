@@ -7,6 +7,11 @@ and I get a text.
 Text is done with a different service because Twilio doesn't do SMS in the UK
 without buying a Twilio number.
 
+If you want to try, then you'll need to:
+
+* set up a Twilio account,
+* move nosecrets.py to secrets.py and fill in all the blanks
+
 # Useful bits
 
 ## Docs
